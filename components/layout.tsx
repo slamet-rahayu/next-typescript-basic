@@ -103,7 +103,7 @@ function Footer(): ReactElement {
     <Box>
       <Box>
         <Container maxWidth="lg">
-          <Box>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             {Payment.map((v) => (
               <Box key={v.name}>
                 <Image width={100} height={100} src={v.src} alt={v.name} />

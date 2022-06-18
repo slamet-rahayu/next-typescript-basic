@@ -6,25 +6,18 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 // import Layout from 'components/layout';
 
+import { ITodo } from 'interface/todo';
+
 function App(): ReactElement {
-  interface ITodo {
-    task: string;
-    isDone: boolean;
-  }
-
-  type Ttodo = ITodo;
-
-  type Ttask = string;
-
   const [todos, setTodos] = useState<ITodo[]>([]);
-  const [todo, setTodo] = useState<Ttodo>({ task: '', isDone: false });
+  const [todo, setTodo] = useState<ITodo>({} as ITodo);
 
   const handleAddTodo = (): void => {
     setTodos((prev) => [...prev, todo]);
     setTodo({ task: '', isDone: false });
   };
 
-  const handleRemoveTodo = (task: Ttask): void => {
+  const handleRemoveTodo = (task: string): void => {
     setTodos((prev) => prev.filter((e) => e.task !== task));
   };
 
