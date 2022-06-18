@@ -4,7 +4,7 @@ import productCategories from 'apis/product_category';
 import { IProductCategData } from 'interface/product-categories';
 
 interface Icateg {
-  pCategories: any;
+  pCategories: IProductCategData[];
   isLoading: boolean;
   isError: boolean;
 }
