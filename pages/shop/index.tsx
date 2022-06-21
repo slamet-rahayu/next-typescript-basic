@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { Box, Container } from '@mui/material';
 import Head from 'next/head';
 import ShopLayout from 'components/shop-layout';

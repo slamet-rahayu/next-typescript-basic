@@ -5,7 +5,7 @@ import styles from './styles/product-categories.module.scss';
 
 export default function ProductCategories(): ReactElement {
   const { useGetPCateg } = PCateg;
-  const { isLoading, isError, pCategories } = useGetPCateg();
+  const { isLoading, isError, data } = useGetPCateg();
   return (
     <Box className={styles.list}>
       <Typography variant="body1">Kategori</Typography>
@@ -13,7 +13,7 @@ export default function ProductCategories(): ReactElement {
         <List>
           {!isLoading &&
             !isError &&
-            pCategories.map((v: any) => (
+            data.map((v: any) => (
               <ListItem key={v.id}>
                 <ListItemText primary={v.attributes.name} />
               </ListItem>

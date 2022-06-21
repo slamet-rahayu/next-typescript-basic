@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { IProductCategRes } from 'interface/product-categories';
+import { TProductCategory } from 'interface/product-categories';
 
-async function getProductCategory(): Promise<IProductCategRes> {
+async function getProductCategory(): Promise<TProductCategory> {
   try {
     const data = await axios.get('/strapi/api/product-categories');
     return data.data;
@@ -11,8 +11,6 @@ async function getProductCategory(): Promise<IProductCategRes> {
   }
 }
 
-const apisObj = {
+export default {
   getProductCategory
 };
-
-export default apisObj;

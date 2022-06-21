@@ -1,3 +1,5 @@
+import { IApiRes } from './res-api';
+
 export interface IProductCategData {
   id: number;
   attributes: {
@@ -9,14 +11,4 @@ export interface IProductCategData {
   };
 }
 
-export interface IProductCategRes {
-  data: IProductCategData[];
-  meta: {
-    pagination: {
-      page: number;
-      pageSize: number;
-      pageCount: number;
-      total: number;
-    };
-  };
-}
+export type TProductCategory = IApiRes<IProductCategData[]>;
