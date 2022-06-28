@@ -1,6 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
-import { TProducts } from 'interface/products';
+import { TProducts, TProductDetail } from 'interface/products';
 
 async function getProduct(): Promise<TProducts> {
   try {
@@ -21,6 +21,23 @@ async function getProduct(): Promise<TProducts> {
   }
 }
 
+async function getProductDetail(id: string | string[] | undefined): Promise<TProductDetail> {
+  try {
+    const params = qs.stringify({
+      populate: {
+        product_category: {
+          fields: ['name']
+        }
+      }
+    });
+    const data = await axios.get(`/strapi/api/products/${id}?${params}`);
+    return data.data;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}
+
 export default {
-  getProduct
+  getProduct,
+  getProductDetail
 };

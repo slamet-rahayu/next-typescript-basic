@@ -3,7 +3,7 @@
 const BASE_API_URL = process.env.BASE_API_URL || 'http://google.com';
 
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   async rewrites() {
     return [
       {

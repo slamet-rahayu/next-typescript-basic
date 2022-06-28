@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import productCategories from 'apis/product_category';
 import { IHookRes } from 'interface/res-api';
 import { IProductCategData } from 'interface/product-categories';
+import { useDispatch, useSelector } from 'react-redux';
+import { initGetPCateg } from 'redux-local/reducers/products-category';
 
 function useGetPCateg(): IHookRes<IProductCategData[]> {
   const [data, setData] = useState<IProductCategData[]>([]);
@@ -32,6 +34,22 @@ function useGetPCateg(): IHookRes<IProductCategData[]> {
   };
 }
 
+function useGetPCategSaga() {
+  const pCategCalls = useSelector((state: any) => state.productscategory);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(initGetPCateg('lol'));
+  }, [dispatch]);
+
+  return {
+    isLoading: pCategCalls.isLoading,
+    isError: pCategCalls.isError,
+    data: pCategCalls.data
+  };
+}
+
 export default {
-  useGetPCateg
+  useGetPCateg,
+  useGetPCategSaga
 };

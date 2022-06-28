@@ -1,40 +1,15 @@
 import { ReactElement, useEffect } from 'react';
 import { Box, Button } from '@mui/material';
-import axios from 'axios';
-import qs from 'qs';
+import productCategory from 'hooks/api/product-categories';
 
 export default function TestPage(): ReactElement {
+  const { useGetPCategSaga } = productCategory;
+
+  const { isError, isLoading, data } = useGetPCategSaga();
+
   useEffect(() => {
-    const query = qs.stringify({
-      populate: {
-        image: {
-          fields: ['url']
-        },
-        product_category: {
-          populate: '*'
-        }
-      },
-      filters: {
-        product_category: {
-          id: 6
-        }
-      }
-    });
-
-    axios({
-      method: 'GET',
-      url: `/strapi/api/products?${query}`
-    })
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-      });
-
-    console.log(query);
-  }, []);
-
+    console.log({ isError, isLoading, data });
+  }, [isError, isLoading, data]);
   return (
     <Box>
       <Button type="button">test fetch with qs</Button>

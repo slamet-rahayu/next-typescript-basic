@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { IHookRes } from 'interface/res-api';
-import type { TProducts } from 'interface/products';
+import type { TProducts, TProductDetail } from 'interface/products';
 import products from 'apis/products';
 
 function useGetProducts(): IHookRes<TProducts> {
@@ -8,20 +8,19 @@ function useGetProducts(): IHookRes<TProducts> {
   const [isLoading, setIsloding] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
 
-  async function getData(): Promise<void> {
-    try {
-      const res = await products.getProduct();
-      setData(res);
-    } catch (error: any) {
-      console.log(error);
-      setIsError(true);
-      throw new Error(error.message);
-    } finally {
-      setIsloding(false);
-    }
-  }
-
   useEffect(() => {
+    async function getData(): Promise<void> {
+      try {
+        const res = await products.getProduct();
+        setData(res);
+      } catch (error: any) {
+        console.log(error);
+        setIsError(true);
+        throw new Error(error.message);
+      } finally {
+        setIsloding(false);
+      }
+    }
     getData();
   }, []);
 
@@ -32,6 +31,37 @@ function useGetProducts(): IHookRes<TProducts> {
   };
 }
 
+function useGetProductDetail(id: string | string[] | undefined): IHookRes<TProductDetail> {
+  const [data, setData] = useState<TProductDetail>({} as TProductDetail);
+  const [isLoading, setIsloding] = useState<boolean>(true);
+  const [isError, setIsError] = useState<boolean>(false);
+
+  useEffect(() => {
+    async function getData(): Promise<void> {
+      try {
+        const res = await products.getProductDetail(id);
+        setData(res);
+      } catch (error: any) {
+        console.log(error);
+        setIsError(true);
+        throw new Error(error.message);
+      } finally {
+        setIsloding(false);
+      }
+    }
+    if (id) {
+      getData();
+    }
+  }, [id]);
+
+  return {
+    data,
+    isLoading,
+    isError
+  };
+}
+
 export default {
-  useGetProducts
+  useGetProducts,
+  useGetProductDetail
 };

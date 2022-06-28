@@ -37,3 +37,5 @@ export interface IProductsData {
 }
 
 export type TProducts = IApiRes<IProductsData[]>;
+
+export type TProductDetail = IApiRes<IProductsData>;
