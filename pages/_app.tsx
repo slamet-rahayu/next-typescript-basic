@@ -28,18 +28,20 @@ type AppPropsWithLayout = AppProps & {
 export default function MyApp(props: AppPropsWithLayout) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   const getLayout = Component.getLayout ?? ((page) => page);
-  return getLayout(
-    <CacheProvider value={emotionCache}>
-      <Head>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
-      </Head>
-      <ThemeProvider theme={theme}>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-        <CssBaseline />
-        <RProvider>
-          <Component {...pageProps} />
-        </RProvider>
-      </ThemeProvider>
-    </CacheProvider>
+  return (
+    <RProvider>
+      {getLayout(
+        <CacheProvider value={emotionCache}>
+          <Head>
+            <meta name="viewport" content="initial-scale=1, width=device-width" />
+          </Head>
+          <ThemeProvider theme={theme}>
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </CacheProvider>
+      )}
+    </RProvider>
   );
 }

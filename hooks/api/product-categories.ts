@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import productCategories from 'apis/product_category';
 import { IHookRes } from 'interface/res-api';
-import { IProductCategData } from 'interface/product-categories';
+import { IProductCategData, TProductCategory } from 'interface/product-categories';
 import { useDispatch, useSelector } from 'react-redux';
-import { initGetPCateg } from 'redux-local/reducers/products-category';
+import Actions from 'redux-local/actions/product-category';
 
 function useGetPCateg(): IHookRes<IProductCategData[]> {
   const [data, setData] = useState<IProductCategData[]>([]);
@@ -34,12 +34,13 @@ function useGetPCateg(): IHookRes<IProductCategData[]> {
   };
 }
 
-function useGetPCategSaga() {
+function useGetPCategSaga(): IHookRes<TProductCategory> {
   const pCategCalls = useSelector((state: any) => state.productscategory);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(initGetPCateg('lol'));
+    // dispatch(initGetPCateg('lol'));
+    dispatch({ type: Actions.GET_PCATEG_REQUESTED, payload: 'hello' });
   }, [dispatch]);
 
   return {

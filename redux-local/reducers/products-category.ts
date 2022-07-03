@@ -9,9 +9,6 @@ const pCategSlice: any = createSlice({
     isError: false
   },
   reducers: {
-    initGetPCateg: (state: any) => {
-      state.isLoading = true;
-    },
     getPCateg: (state: any, action: any): void => {
       state.data = action.payload;
     },

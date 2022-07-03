@@ -1,10 +1,10 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { TProductCategory } from 'interface/product-categories';
 import productCategory from 'apis/product_category';
+import Actions from 'redux-local/actions/product-category';
 import { getPCateg, failGetPCateg, doneGetPcateg } from '../reducers/products-category';
 
-function* pCategFetch(payload: any) {
-  console.log({ payloadddddddddddddddddd: payload });
+function* pCategFetch() {
   try {
     const data: TProductCategory = yield call(() => productCategory.getProductCategory());
     yield put(getPCateg(data));
@@ -16,5 +16,5 @@ function* pCategFetch(payload: any) {
 }
 
 export default function* pCategSaga() {
-  yield takeEvery('productscategory/initGetPCateg', pCategFetch);
+  yield takeEvery(Actions.GET_PCATEG_REQUESTED, pCategFetch);
 }
