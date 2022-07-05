@@ -21,6 +21,31 @@ const productSlice: any = createSlice({
   }
 });
 
+const productDetailSlice: any = createSlice({
+  name: 'pruduct',
+  initialState: {
+    data: {},
+    isLoading: true,
+    isError: false
+  },
+  reducers: {
+    getProduct: (state: any, action: any): void => {
+      state.data = action.payload;
+    },
+    failGetProduct: (state) => {
+      state.isError = true;
+    },
+    doneGetProduct: (state) => {
+      state.isLoading = false;
+    }
+  }
+});
+
 export const { getProducts, failGetProducts, doneGetProducts } = productSlice.actions;
 
-export default productSlice.reducer;
+export const { getProduct, failGetProduct, doneGetProduct } = productDetailSlice.actions;
+
+export default {
+  productSlice: productSlice.reducer,
+  productDetailSlice: productDetailSlice.reducer
+};

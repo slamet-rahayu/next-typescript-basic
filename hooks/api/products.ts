@@ -1,67 +1,40 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { IHookRes } from 'interface/res-api';
 import type { TProducts, TProductDetail } from 'interface/products';
-import products from 'apis/products';
+import { useDispatch, useSelector } from 'react-redux';
+import Actions from 'redux-local/actions/products';
 
-function useGetProducts(): IHookRes<TProducts> {
-  const [data, setData] = useState<TProducts>({} as TProducts);
-  const [isLoading, setIsloding] = useState<boolean>(true);
-  const [isError, setIsError] = useState<boolean>(false);
+type TProductID = string | string[] | undefined;
 
+function useGetProuductsSaga(): IHookRes<TProducts> {
+  const productCalls = useSelector((state: any) => state.products);
+  const dispatch = useDispatch();
   useEffect(() => {
-    async function getData(): Promise<void> {
-      try {
-        const res = await products.getProduct();
-        setData(res);
-      } catch (error: any) {
-        console.log(error);
-        setIsError(true);
-        throw new Error(error.message);
-      } finally {
-        setIsloding(false);
-      }
-    }
-    getData();
-  }, []);
-
+    dispatch({ type: Actions.GET_PRODUCTS_REQUESTED });
+  }, [dispatch]);
   return {
-    data,
-    isLoading,
-    isError
+    isLoading: productCalls.isLoading,
+    isError: productCalls.isError,
+    data: productCalls.data
   };
 }
 
-function useGetProductDetail(id: string | string[] | undefined): IHookRes<TProductDetail> {
-  const [data, setData] = useState<TProductDetail>({} as TProductDetail);
-  const [isLoading, setIsloding] = useState<boolean>(true);
-  const [isError, setIsError] = useState<boolean>(false);
-
+function useGetProuductSaga(id?: TProductID): IHookRes<TProductDetail> {
+  const productCalls = useSelector((state: any) => state.product);
+  const dispatch = useDispatch();
   useEffect(() => {
-    async function getData(): Promise<void> {
-      try {
-        const res = await products.getProductDetail(id);
-        setData(res);
-      } catch (error: any) {
-        console.log(error);
-        setIsError(true);
-        throw new Error(error.message);
-      } finally {
-        setIsloding(false);
-      }
-    }
     if (id) {
-      getData();
+      dispatch({ type: Actions.GET_PRODUCT_REQUESTED, payload: id });
     }
-  }, [id]);
-
+  }, [dispatch, id]);
   return {
-    data,
-    isLoading,
-    isError
+    isLoading: productCalls.isLoading,
+    isError: productCalls.isError,
+    data: productCalls.data
   };
 }
 
 export default {
-  useGetProducts,
-  useGetProductDetail
+  useGetProuductsSaga,
+  useGetProuductSaga
 };

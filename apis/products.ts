@@ -2,7 +2,10 @@ import axios from 'axios';
 import qs from 'qs';
 import { TProducts, TProductDetail } from 'interface/products';
 
-async function getProduct(): Promise<TProducts> {
+type TDetail = string | string[] | undefined;
+type TProduct = number;
+
+async function getProduct(page: TProduct = 1): Promise<TProducts> {
   try {
     const query = qs.stringify({
       populate: {
@@ -12,6 +15,10 @@ async function getProduct(): Promise<TProducts> {
         product_category: {
           populate: '*'
         }
+      },
+      pagination: {
+        limit: 5,
+        start: page > 1 ? (page - 1) * 5 : 0
       }
     });
     const data = await axios.get(`/strapi/api/products?${query}`);
@@ -21,10 +28,13 @@ async function getProduct(): Promise<TProducts> {
   }
 }
 
-async function getProductDetail(id: string | string[] | undefined): Promise<TProductDetail> {
+async function getProductDetail(id?: TDetail): Promise<TProductDetail> {
   try {
     const params = qs.stringify({
       populate: {
+        image: {
+          fields: ['url']
+        },
         product_category: {
           fields: ['name']
         }

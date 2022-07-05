@@ -26,9 +26,6 @@ export default function HeaderShop(): ReactElement {
             <Grid container>
               <Grid item lg={8} display="flex" justifyContent="space-between">
                 <Image src="/tokopaedis.png" width={280} height={0} />
-                {/* <Button variant="text" size="small" sx={{ ml: 2 }}>
-                  <Typography sx={{ color: 'white' }}>Kategori</Typography>
-                </Button> */}
                 <ProductCategories />
                 <TextField
                   placeholder="Cari Powerbank"

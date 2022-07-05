@@ -1,49 +1,61 @@
-import { Box, Card, CardContent, CardMedia, Grid, Typography } from '@mui/material';
-import { ReactElement } from 'react';
-import products from 'hooks/api/products';
-import { useRouter } from 'next/router';
+import { Box, Card, CardContent, CardMedia, Grid, Pagination, Typography } from '@mui/material';
+import { ReactElement, useEffect } from 'react';
+import productsApi from 'hooks/api/products';
+import useProductsHook from 'hooks/pages/products';
+import CLink from 'components/Link';
 import styles from './styles/products.module.scss';
 
 export default function ShopProductList(): ReactElement {
-  const { data, isError, isLoading } = products.useGetProducts();
-
-  const router = useRouter();
-
-  function handleProductClick(slug: string, id: string | number): void {
-    router.push(`/shop/products/${slug}?id=${id}`);
-  }
-
+  const { data, isError, isLoading } = productsApi.useGetProuductsSaga();
+  const { changePage } = useProductsHook();
+  useEffect(() => {
+    console.log({ data, isError, isLoading });
+  }, [data, isError, isLoading]);
   return (
     <Box>
       <Grid container spacing={5}>
-        {!isError &&
-          !isLoading &&
-          data.data.map((v) => {
-            const imgUrl = `/strapi${v.attributes.image.data[0].attributes.url}`;
-            const onCardClick = (): void => {
-              handleProductClick(v.attributes.slug, v.id);
-            };
-            return (
-              <Grid item lg={3} key={v.id}>
-                <Card className={styles.card} onClick={onCardClick}>
-                  <CardMedia component="img" alt={v.attributes.name} image={imgUrl} height={250} />
-                  <CardContent>
-                    <Typography
-                      gutterBottom
-                      variant="body1"
-                      fontWeight="bold"
-                      fontFamily="Roboto"
-                      component="div"
-                    >
-                      {v.attributes.name.substring(0, 100)}
-                    </Typography>
-                    <Typography>{v.attributes.product_category.data.attributes.name}</Typography>
-                    <Typography>$ {v.attributes.price}</Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            );
-          })}
+        {!isError && !isLoading && data?.data.length > 0 && (
+          <>
+            {data.data.map((v) => {
+              const imgUrl = `/strapi${v.attributes.image.data[0].attributes.url}`;
+              return (
+                <Grid item lg={3} key={v.id}>
+                  <CLink href={`/shop/products/${v.attributes.slug}?id=${v.id}`}>
+                    <Card className={styles.card}>
+                      <CardMedia
+                        component="img"
+                        alt={v.attributes.name}
+                        image={imgUrl}
+                        height={250}
+                      />
+                      <CardContent>
+                        <Typography
+                          gutterBottom
+                          variant="body1"
+                          fontWeight="bold"
+                          fontFamily="Roboto"
+                          component="div"
+                        >
+                          {v.attributes.name.substring(0, 100)}
+                        </Typography>
+                        <Typography>
+                          {v.attributes.product_category.data.attributes.name}
+                        </Typography>
+                        <Typography>$ {v.attributes.price}</Typography>
+                      </CardContent>
+                    </Card>
+                  </CLink>
+                </Grid>
+              );
+            })}
+            <Grid item lg={12} display="flex" justifyContent="flex-end">
+              <Pagination
+                count={data.meta.pagination.total / data.meta.pagination.limit}
+                onChange={(e, p) => changePage(p)}
+              />
+            </Grid>
+          </>
+        )}
       </Grid>
     </Box>
   );

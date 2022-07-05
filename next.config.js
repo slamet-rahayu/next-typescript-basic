@@ -11,6 +11,9 @@ const nextConfig = {
         destination: `${BASE_API_URL}/:path*`
       }
     ];
+  },
+  images: {
+    domains: ['localhost']
   }
 };
 
