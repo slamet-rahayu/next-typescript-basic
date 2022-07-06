@@ -10,6 +10,7 @@ import {
   Toolbar,
   Typography
 } from '@mui/material';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -18,6 +19,10 @@ import MailIcon from '@mui/icons-material/Mail';
 import ProductCategories from './product-categories';
 
 export default function HeaderShop(): ReactElement {
+  const router = useRouter();
+  const handleClickCart = () => {
+    router.push('/shop/cart');
+  };
   return (
     <Box>
       <AppBar position="static">
@@ -39,7 +44,7 @@ export default function HeaderShop(): ReactElement {
               </Grid>
               <Grid item lg={4} display="flex" justifyContent="flex-end">
                 <Box display="flex">
-                  <IconButton>
+                  <IconButton onClick={handleClickCart}>
                     <Badge badgeContent={10} color="warning" showZero={false}>
                       <ShoppingCartIcon sx={{ color: 'white' }} />
                     </Badge>
