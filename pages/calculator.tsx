@@ -1,20 +1,6 @@
-import React, { ReactElement, ReactNode } from 'react';
+import { ReactElement } from 'react';
+import Calculator from 'partials/calculator';
 
-interface IBtnProps {
-  children: ReactNode;
+export default function CalculatorPage(): ReactElement {
+  return <Calculator />;
 }
-
-function Button(props: IBtnProps): ReactElement {
-  const { children } = props;
-  return <button type="button">{children}</button>;
-}
-
-function Calculator(): ReactElement {
-  return (
-    <div>
-      <Button>Hello</Button>
-    </div>
-  );
-}
-
-export default Calculator;

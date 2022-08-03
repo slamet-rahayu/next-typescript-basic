@@ -25,7 +25,10 @@ module.exports = {
     sourceType: 'module'
   },
   plugins: ['react', '@typescript-eslint'],
+  ignorePatterns: ['**/__test__/*.jsx'],
   rules: {
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': ['error'],
     'react/react-in-jsx-scope': 'off',
     'react/prefer-stateless-function': 0,
     'react/jsx-one-expression-per-line': 0,
