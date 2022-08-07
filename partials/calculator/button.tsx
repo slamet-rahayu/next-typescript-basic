@@ -6,16 +6,10 @@ type TBtnVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'warning';
 interface IButtonProps {
   children: ReactNode;
   onClick?: () => void;
-  keyName?: string | undefined;
   variant?: TBtnVariant;
 }
 
-export default function Button({
-  children,
-  onClick,
-  keyName,
-  variant
-}: IButtonProps): ReactElement {
+export default function Button({ children, onClick, variant }: IButtonProps): ReactElement {
   let classVariant = '';
   switch (variant) {
     case 'primary':
@@ -38,12 +32,7 @@ export default function Button({
       break;
   }
   return (
-    <button
-      key={keyName}
-      type="button"
-      onClick={onClick}
-      className={`${styles.btn} ${classVariant}`}
-    >
+    <button type="button" onClick={onClick} className={`${styles.btn} ${classVariant}`}>
       {children}
     </button>
   );
@@ -51,6 +40,5 @@ export default function Button({
 
 Button.defaultProps = {
   onClick: () => {},
-  keyName: undefined,
   variant: 'primary'
 };

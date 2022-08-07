@@ -23,7 +23,7 @@ function Calculator(): ReactElement {
         return val1 + val2;
       case 'subtract':
         return val1 - val2;
-      case 'multiple':
+      case 'multiply':
         return val1 * val2;
       case 'divide':
         return val1 / val2;
@@ -71,7 +71,14 @@ function Calculator(): ReactElement {
         setNumber(3, operator);
       }
     },
-    { name: 'multiple', value: 'X', className: styles.btn, onClick: () => {} },
+    {
+      name: 'multiply',
+      value: 'X',
+      className: styles.btn,
+      onClick: () => {
+        setOperator('multiply');
+      }
+    },
     {
       name: 'four',
       value: 4,
@@ -151,10 +158,12 @@ function Calculator(): ReactElement {
       value: '=',
       className: styles.btn,
       onClick: (): void => {
-        setValueRes(calculate(value1, value2, operator));
-        setValue1(0);
-        setValue2(0);
-        setOperator('');
+        if (operator && value2) {
+          setValueRes(calculate(value1, value2, operator));
+          setValue1(0);
+          setValue2(0);
+          setOperator('');
+        }
       }
     }
   ];
@@ -162,17 +171,10 @@ function Calculator(): ReactElement {
   return (
     <div className={styles.ccontainer}>
       <div className={styles.content}>
-        <input
-          type="text"
-          name="result"
-          value={valueRes}
-          className={styles.result}
-          data-testid="value-res"
-          readOnly
-        />
+        <input type="text" name="result" value={valueRes} className={styles.result} readOnly />
         <div className={styles.btn_container}>
           {buttonData.map((v) => (
-            <Button keyName={v.name} onClick={v.onClick}>
+            <Button key={v.name} onClick={v.onClick}>
               {v.value}
             </Button>
           ))}
