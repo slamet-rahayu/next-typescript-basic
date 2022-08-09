@@ -1,5 +1,5 @@
 import { Box, Card, CardContent, CardMedia, Grid, Pagination, Typography } from '@mui/material';
-import { ReactElement, useEffect } from 'react';
+import { ReactElement } from 'react';
 import productsApi from 'hooks/api/products';
 import useProductsHook from 'hooks/pages/products';
 import CLink from 'components/Link';
@@ -8,9 +8,6 @@ import styles from './styles/products.module.scss';
 export default function ShopProductList(): ReactElement {
   const { data, isError, isLoading } = productsApi.useGetProuductsSaga();
   const { changePage } = useProductsHook();
-  useEffect(() => {
-    console.log({ data, isError, isLoading });
-  }, [data, isError, isLoading]);
   return (
     <Box>
       <Grid container spacing={5}>

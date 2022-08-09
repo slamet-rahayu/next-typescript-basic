@@ -1,0 +1,5 @@
+const POST_LOGIN_REQUESTED = 'POST_LOGIN_REQUESTED';
+
+export default {
+  POST_LOGIN_REQUESTED
+};

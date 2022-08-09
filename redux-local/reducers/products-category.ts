@@ -21,6 +21,6 @@ const pCategSlice: any = createSlice({
   }
 });
 
-export const { initGetPCateg, getPCateg, failGetPCateg, doneGetPcateg } = pCategSlice.actions;
+export const { getPCateg, failGetPCateg, doneGetPcateg } = pCategSlice.actions;
 
 export default pCategSlice.reducer;

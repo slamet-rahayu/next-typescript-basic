@@ -1,8 +1,8 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { TProducts, TProductDetail } from 'interface/products';
 import products from 'apis/products';
-import Actions from 'redux-local/actions/products';
 import { PayloadAction } from '@reduxjs/toolkit';
+import Actions from '../actions/products';
 import {
   getProducts,
   getProduct,

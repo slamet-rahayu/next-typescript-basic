@@ -1,7 +1,7 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { TProductCategory } from 'interface/product-categories';
 import productCategory from 'apis/product_category';
-import Actions from 'redux-local/actions/product-category';
+import Actions from '../actions/product-category';
 import { getPCateg, failGetPCateg, doneGetPcateg } from '../reducers/products-category';
 
 function* pCategFetch() {
