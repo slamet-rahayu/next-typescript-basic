@@ -9,8 +9,12 @@ const loginSlice: any = createSlice({
     isError: ''
   },
   reducers: {
+    resetState: (state: any) => {
+      state.data = {};
+      state.isLoading = true;
+      state.isError = '';
+    },
     postLogin: (state: any, action: any): void => {
-      state.login = true;
       state.data = action.payload;
     },
     failLogin: (state: any, action: any) => {
@@ -22,6 +26,6 @@ const loginSlice: any = createSlice({
   }
 });
 
-export const { postLogin, failLogin, donePostLogin } = loginSlice.actions;
+export const { postLogin, failLogin, donePostLogin, resetState } = loginSlice.actions;
 
 export default loginSlice.reducer;

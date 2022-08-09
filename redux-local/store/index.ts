@@ -10,7 +10,8 @@ const store = configureStore({
     productscategory: reducers.pCategReducer,
     products: reducers.pReducer,
     product: reducers.pDReducer,
-    login: reducers.loginReducer
+    login: reducers.loginReducer,
+    userinfo: reducers.userInfoReducer
   },
   middleware: [saga]
 });

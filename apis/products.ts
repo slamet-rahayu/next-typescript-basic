@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 import axios from 'axios';
 import qs from 'qs';
 import { TProducts, TProductDetail } from 'interface/products';
@@ -23,8 +24,8 @@ async function getProduct(page: TProduct = 1): Promise<TProducts> {
     });
     const data = await axios.get(`/strapi/api/products?${query}`);
     return data.data;
-  } catch (error: any) {
-    throw new Error(error.message);
+  } catch (error) {
+    throw error;
   }
 }
 
@@ -43,7 +44,7 @@ async function getProductDetail(id?: TDetail): Promise<TProductDetail> {
     const data = await axios.get(`/strapi/api/products/${id}?${params}`);
     return data.data;
   } catch (error: any) {
-    throw new Error(error.message);
+    throw error;
   }
 }
 
