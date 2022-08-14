@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement, useState, MouseEvent } from 'react';
 import {
   AppBar,
   Badge,
@@ -6,6 +6,8 @@ import {
   Container,
   Grid,
   IconButton,
+  Menu,
+  MenuItem,
   TextField,
   Toolbar,
   Typography
@@ -16,13 +18,36 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MailIcon from '@mui/icons-material/Mail';
+import userHooks from 'hooks/api/user';
+import checkAuth from 'hooks/utils/checkAuth';
 import ProductCategories from './product-categories';
 
 export default function HeaderShop(): ReactElement {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const router = useRouter();
+  const user = userHooks.useGetUserInfo();
+
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const handleClickCart = () => {
     router.push('/shop/cart');
   };
+
+  const logout = () => {
+    localStorage.removeItem('jwtToken');
+    router.reload();
+  };
+
+  const isLoggedIn = checkAuth.useCheckAuth();
+
   return (
     <Box>
       <AppBar position="static">
@@ -69,10 +94,27 @@ export default function HeaderShop(): ReactElement {
                       borderRadius: '5px'
                     }}
                   >
-                    <Typography>Mamer</Typography>
-                    <IconButton>
+                    {isLoggedIn && <Typography>{user.data.username}</Typography>}
+                    <IconButton
+                      id="basic-button"
+                      aria-controls={open ? 'basic-menu' : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={open ? 'true' : undefined}
+                      onClick={handleClick}
+                    >
                       <AccountCircle sx={{ color: 'white' }} />
                     </IconButton>
+                    <Menu
+                      id="basic-menu"
+                      anchorEl={anchorEl}
+                      open={open}
+                      onClose={handleClose}
+                      MenuListProps={{
+                        'aria-labelledby': 'basic-button'
+                      }}
+                    >
+                      <MenuItem onClick={logout}>Logout</MenuItem>
+                    </Menu>
                   </Box>
                 </Box>
               </Grid>

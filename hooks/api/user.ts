@@ -4,12 +4,17 @@ import { IUserRes } from 'interface/user';
 import { useDispatch, useSelector } from 'react-redux';
 import Actions from 'redux-local/actions/user';
 
-function useGetUserInfoSaga(): IHookRes<IUserRes> {
-  const userInfoCalls = useSelector((state: any) => state.userinfo);
+interface IUserInfoState extends IHookRes<IUserRes> {
+  userinfo: IHookRes<IUserRes>;
+}
+
+function useGetUserInfo(): IHookRes<IUserRes> {
+  const userInfoCalls = useSelector((state: IUserInfoState) => state.userinfo);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({ type: Actions.GET_USERINFO_REQUESTED, payload: '' });
+    const jwtToken = localStorage.getItem('jwtToken');
+    dispatch({ type: Actions.GET_USERINFO_REQUESTED, payload: jwtToken });
   }, [dispatch]);
 
   return {
@@ -20,5 +25,5 @@ function useGetUserInfoSaga(): IHookRes<IUserRes> {
 }
 
 export default {
-  useGetUserInfoSaga
+  useGetUserInfo
 };

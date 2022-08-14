@@ -7,6 +7,7 @@ export default {
   pCategReducer,
   pReducer: pReducer.productSlice,
   pDReducer: pReducer.productDetailSlice,
-  loginReducer,
+  loginReducer: loginReducer.loginSlice,
+  isLoggedInReducer: loginReducer.isLoggedInSlice,
   userInfoReducer: userReducer.userInfoSlice
 };

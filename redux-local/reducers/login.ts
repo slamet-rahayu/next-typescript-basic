@@ -26,6 +26,23 @@ const loginSlice: any = createSlice({
   }
 });
 
+const isLoggedInSlice: any = createSlice({
+  name: 'isloggedin',
+  initialState: {
+    isLoggedIn: false
+  },
+  reducers: {
+    setIsLoggedIn: (state: any, action: any) => {
+      state.isLoggedIn = action.payload;
+    }
+  }
+});
+
 export const { postLogin, failLogin, donePostLogin, resetState } = loginSlice.actions;
 
-export default loginSlice.reducer;
+export const { setIsLoggedIn } = isLoggedInSlice.actions;
+
+export default {
+  loginSlice: loginSlice.reducer,
+  isLoggedInSlice: isLoggedInSlice.reducer
+};

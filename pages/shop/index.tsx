@@ -3,6 +3,7 @@ import { Box, Container } from '@mui/material';
 import Head from 'next/head';
 import ShopLayout from 'components/shop-layout';
 import ShopCarousel from 'partials/shop/carousel';
+import Recommended from 'partials/shop/recommended-categ';
 
 function ShopPage(): ReactElement {
   return (
@@ -13,6 +14,7 @@ function ShopPage(): ReactElement {
       <Container maxWidth="xl">
         <Box>
           <ShopCarousel />
+          <Recommended />
         </Box>
       </Container>
     </>

@@ -11,6 +11,7 @@ const store = configureStore({
     products: reducers.pReducer,
     product: reducers.pDReducer,
     login: reducers.loginReducer,
+    isloggedin: reducers.isLoggedInReducer,
     userinfo: reducers.userInfoReducer
   },
   middleware: [saga]
