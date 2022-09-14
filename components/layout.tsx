@@ -11,6 +11,7 @@ import Link from 'next/link';
 import MatoaLogo from 'public/matoa-logo.png';
 import styles from 'styles/components/layout.module.scss';
 import SearchIcon from 'public/search.svg';
+import checkAuth from 'hooks/utils/checkAuth';
 
 interface ILayout {
   children: React.ReactNode;
@@ -66,6 +67,7 @@ function NavLink(): React.ReactElement {
 }
 
 function Header(): ReactElement {
+  checkAuth.useCheckAuth();
   return (
     <AppBar position="static" color="transparent" elevation={0}>
       <Toolbar className={styles.toolbar} disableGutters>

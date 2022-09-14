@@ -6,7 +6,7 @@
     "dev": "cross-env NODE_ENV=development next dev",
     "build": "cross-env NODE_ENV=production next build",
     "start": "cross-env NODE_ENV=production next start",
-    "test": "jest",
+    "test": "cross-env NODE_ENV=test jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "lint": "next lint"

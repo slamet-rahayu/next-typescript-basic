@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Actions from 'redux-local/actions/login';
 
 function useRedirectAuth(shouldLogin = true): void {
@@ -17,9 +17,8 @@ function useRedirectAuth(shouldLogin = true): void {
   }, [router, shouldLogin]);
 }
 
-function useCheckAuth(): boolean {
+function useCheckAuth(): void {
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state: any) => state.isloggedin);
   useEffect(() => {
     const jwtToken = localStorage.getItem('jwtToken');
     if (jwtToken) {
@@ -28,8 +27,6 @@ function useCheckAuth(): boolean {
       dispatch({ type: Actions.SET_IS_LOGGEDIN, payload: false });
     }
   }, [dispatch]);
-
-  return isLoggedIn.isLoggedIn;
 }
 
 export default {

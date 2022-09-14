@@ -19,12 +19,14 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MailIcon from '@mui/icons-material/Mail';
 import userHooks from 'hooks/api/user';
+import { useSelector } from 'react-redux';
 import checkAuth from 'hooks/utils/checkAuth';
 import ProductCategories from './product-categories';
 
 export default function HeaderShop(): ReactElement {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const router = useRouter();
+  checkAuth.useCheckAuth();
   const user = userHooks.useGetUserInfo();
 
   const open = Boolean(anchorEl);
@@ -46,7 +48,7 @@ export default function HeaderShop(): ReactElement {
     router.reload();
   };
 
-  const isLoggedIn = checkAuth.useCheckAuth();
+  const { isLoggedIn } = useSelector((state: any) => state.isloggedin);
 
   return (
     <Box>
@@ -94,7 +96,8 @@ export default function HeaderShop(): ReactElement {
                       borderRadius: '5px'
                     }}
                   >
-                    {isLoggedIn && <Typography>{user.data.username}</Typography>}
+                    {/* {isLoggedIn && <Typography>{user.data.username}</Typography>} */}
+                    <Typography variant="body2">{user.data.username}</Typography>
                     <IconButton
                       id="basic-button"
                       aria-controls={open ? 'basic-menu' : undefined}
